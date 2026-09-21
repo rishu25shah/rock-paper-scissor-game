@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors — Modern AI Battle Arena</title>
+  <meta name="description" content="Play the classic Rock Paper Scissors game with a sleek modern design, sound effects, score tracking, and real-time battle animations.">
+  
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Top Navigation / Header -->
+    <header class="app-header">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        <span>Interactive AI Battle</span>
+      </div>
+      <h1 class="game-title">
+        <span class="gradient-text">Rock</span> 
+        <span class="separator">•</span> 
+        <span class="gradient-text">Paper</span> 
+        <span class="separator">•</span> 
+        <span class="gradient-text">Scissors</span>
+      </h1>
+      <p class="game-subtitle">Outsmart the computer algorithm in this next-gen arena.</p>
+
+      <!-- Utility action buttons -->
+      <div class="header-actions">
+        <button id="sound-toggle-btn" class="util-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+          <span id="sound-icon" class="util-icon">🔊</span>
+          <span id="sound-text">Sound: ON</span>
+        </button>
+        <button id="reset-score-btn" class="util-btn" title="Reset all scores" aria-label="Reset Scoreboard">
+          <span class="util-icon">🔄</span>
+          <span>Reset Stats</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scoreboard Section -->
+    <section class="scoreboard-section" aria-label="Game Scoreboard">
+      <div class="score-card player-card">
+        <div class="card-glow"></div>
+        <div class="score-header">
+          <div class="avatar-box player-avatar">
+            <span>👤</span>
+          </div>
+          <div class="player-info">
+            <span class="role-tag">CHALLENGER</span>
+            <span class="player-name">Player</span>
+          </div>
+        </div>
+        <div class="score-number-wrapper">
+          <span id="player-score" class="score-number">0</span>
+          <span class="score-label">Wins</span>
+        </div>
+      </div>
+
+      <!-- VS & Round Hub -->
+      <div class="round-hub">
+        <div class="hub-circle">
+          <span class="vs-text">VS</span>
+        </div>
+        <div class="round-counter">
+          <span class="round-prefix">ROUND</span>
+          <span id="round-number" class="round-val">1</span>
+        </div>
+        <div class="tie-counter">
+          <span id="tie-count" class="tie-val">0</span>
+          <span class="tie-lbl">Ties</span>
+        </div>
+      </div>
+
+      <div class="score-card computer-card">
+        <div class="card-glow"></div>
+        <div class="score-header">
+          <div class="avatar-box computer-avatar">
+            <span>🤖</span>
+          </div>
+          <div class="player-info">
+            <span class="role-tag">ALGORITHM</span>
+            <span class="player-name">Computer</span>
+          </div>
+        </div>
+        <div class="score-number-wrapper">
+          <span id="computer-score" class="score-number">0</span>
+          <span class="score-label">Wins</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Duel Arena Section -->
+    <main class="arena-section" aria-label="Battle Arena">
+      <div class="arena-card">
+        <!-- Live Battle Display -->
+        <div class="battlefield">
+          <!-- Player Slot -->
+          <div class="fighter-side player-fighter">
+            <span class="fighter-label">Your Move</span>
+            <div id="player-choice-display" class="choice-slot empty">
+              <span class="choice-icon" id="player-choice-icon">❓</span>
+              <span class="choice-title" id="player-choice-title">Waiting...</span>
+            </div>
+          </div>
+
+          <!-- Center Result Display -->
+          <div class="battle-center">
+            <div id="outcome-banner" class="outcome-banner neutral">
+              <span id="outcome-icon" class="outcome-icon">⚔️</span>
+              <h2 id="outcome-heading" class="outcome-heading">Ready for Battle</h2>
+              <p id="outcome-detail" class="outcome-detail">Select a weapon below to begin round 1</p>
+            </div>
+          </div>
+
+          <!-- Computer Slot -->
+          <div class="fighter-side computer-fighter">
+            <span class="fighter-label">AI Move</span>
+            <div id="computer-choice-display" class="choice-slot empty">
+              <span class="choice-icon" id="computer-choice-icon">❓</span>
+              <span class="choice-title" id="computer-choice-title">Waiting...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weapon Choice Controls -->
+        <div class="controls-container">
+          <h3 class="controls-heading">Choose Your Weapon</h3>
+          <div class="weapons-grid">
+            <!-- Rock Button -->
+            <button id="btn-rock" class="weapon-btn weapon-rock" data-weapon="rock" aria-label="Choose Rock">
+              <div class="weapon-glow"></div>
+              <div class="weapon-icon-wrapper">
+                <span class="weapon-emoji">🪨</span>
+              </div>
+              <div class="weapon-meta">
+                <span class="weapon-name">Rock</span>
+                <span class="weapon-rule">Crushes Scissors</span>
+              </div>
+              <div class="key-hint">Press 1</div>
+            </button>
+
+            <!-- Paper Button -->
+            <button id="btn-paper" class="weapon-btn weapon-paper" data-weapon="paper" aria-label="Choose Paper">
+              <div class="weapon-glow"></div>
+              <div class="weapon-icon-wrapper">
+                <span class="weapon-emoji">📄</span>
+              </div>
+              <div class="weapon-meta">
+                <span class="weapon-name">Paper</span>
+                <span class="weapon-rule">Covers Rock</span>
+              </div>
+              <div class="key-hint">Press 2</div>
+            </button>
+
+            <!-- Scissors Button -->
+            <button id="btn-scissor" class="weapon-btn weapon-scissors" data-weapon="scissor" aria-label="Choose Scissors">
+              <div class="weapon-glow"></div>
+              <div class="weapon-icon-wrapper">
+                <span class="weapon-emoji">✂️</span>
+              </div>
+              <div class="weapon-meta">
+                <span class="weapon-name">Scissors</span>
+                <span class="weapon-rule">Cuts Paper</span>
+              </div>
+              <div class="key-hint">Press 3</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Match History Drawer -->
+    <section class="history-section" aria-label="Match History">
+      <div class="history-header">
+        <div class="history-title-wrap">
+          <span class="history-icon">📜</span>
+          <h3 class="history-title">Round History</h3>
+        </div>
+        <span id="history-badge" class="history-badge">0 Matches</span>
+      </div>
+      <div id="history-list" class="history-list">
+        <div class="history-empty">No rounds played yet. Make your first move!</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="rules-summary">
+        <span>Rules: </span>
+        <span class="rule-chip">🪨 beats ✂️</span>
+        <span class="rule-chip">📄 beats 🪨</span>
+        <span class="rule-chip">✂️ beats 📄</span>
+      </div>
+      <p class="copyright">Original Python Game by <strong>Rishu Shah</strong> • Enhanced Web Edition</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js" defer></script>
+</body>
+</html>
